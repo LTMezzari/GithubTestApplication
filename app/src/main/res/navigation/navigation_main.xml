@@ -10,7 +10,8 @@
         <action
             android:id="@+id/action_searchFragment_to_userFragment"
             app:destination="@id/userFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"

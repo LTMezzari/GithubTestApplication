@@ -1,6 +1,7 @@
 package mezzari.torres.lucas.github_test_application.conductor
 
 import android.content.Intent
+import android.net.Uri
 import androidx.navigation.fragment.findNavController
 import mezzari.torres.lucas.conductor.annotation.ConductorAnnotation
 import mezzari.torres.lucas.conductor.source.generic.annotated.AnnotatedConductor
@@ -77,8 +78,21 @@ class MainConductor: AnnotatedConductor(), IMainConductor {
                 }
             }
 
+            UserFragment.UserFragmentPaths.SEARCH -> {
+                val navController = userFragment.findNavController()
+                if (navController.currentDestination?.id != R.id.searchFragment) {
+                    user = null
+                    repository = null
+                    sessionManager.user = null
+                    navController.navigateUp()
+                }
+
+            }
+
             UserFragment.UserFragmentPaths.PROFILE -> {
                 //Open github profile on web
+                val userUrl = user?.originUrl ?: return
+                userFragment.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(userUrl)))
             }
         }
     }
@@ -110,6 +124,8 @@ class MainConductor: AnnotatedConductor(), IMainConductor {
     @ConductorAnnotation(RepositoryFragment::class, AnnotatedFlowCycle.NEXT)
     fun onRepositoryFragmentNext(repositoryFragment: RepositoryFragment) {
         //Open github repository on web
+        val repositoryUrl = repository?.originUrl ?: return
+        repositoryFragment.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(repositoryUrl)))
     }
 
     override fun end() {

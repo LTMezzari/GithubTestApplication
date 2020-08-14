@@ -98,10 +98,16 @@ class UserFragment: BaseFragment() {
             next(UserFragmentPaths.PROFILE)
         }
 
+        dataBinding.tvSearch.setOnClickListener {
+            //Go back to search
+            next(UserFragmentPaths.SEARCH)
+        }
+
         viewModel.loadOverview()
     }
 
     enum class UserFragmentPaths: Path {
+        SEARCH,
         PROFILE,
         REPOSITORIES
     }
